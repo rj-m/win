@@ -1,0 +1,22 @@
+---
+- name: Add a user
+  hosts: all
+  gather_facts: false
+  tasks:
+    - name: copy msi
+      win_copy:
+        src: /home/ansible/Dynatrace-OneAgent-Windows-1.117.255.exe
+        dest: c:\Dynatrace-OneAgent-Windows-1.117.255.exe
+
+
+    - name: install dynatrace
+      win_package:
+        path: c:\Dynatrace-OneAgent-Windows-1.117.255.exe
+        state: present
+        product_id: '{A9919BC7-656B-4B55-B2AF-19F5B3064388}'
+       # product_id: 'Dynatrace OneAgent'
+        arguments: /quiet
+   - name: Restart a service
+      win_service:
+        name: Tomcat8
+        state: restarted
